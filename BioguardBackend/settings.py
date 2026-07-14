@@ -8,9 +8,24 @@ https://docs.djangoproject.com/en/6.0/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
+
+AUTH model:
+- Firebase handles signup/login/password rest on the Next.js frontend
+- The frontend sends the Firebase ID token as `Authorization: Bearer <token>`
+    on every API request.
+- Django never stores passwords. 'accounts.authentication.FirebaseAuthentication'
+  verifies the token sever-side and maps it to a local `Profie` row (in
+  Supabase Postgres) that holds name, username, clinic membership, etc.
 """
 
 from pathlib import Path
+import os
+import dj_database_url
+from dotenv import load_dotenv
+from decouple import Csv, config 
+
+# This loads the variable from .env
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,27 +35,33 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-c&kw0%*##xox*md4o8c5@oopr)kpv#*^svs7y)428487l7tb2*'
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config("DEBUG", default=False, cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config("DJANGO_ALLOWED_HOSTS", default="localhost, 127.0.0.1", cast=Csv())
+
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -73,10 +94,11 @@ WSGI_APPLICATION = 'BioguardBackend.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get("POSTGRES_URL"),
+        conn_max_age=600,
+        conn_health_checks=True
+    )
 }
 
 
@@ -115,3 +137,42 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "accounts.authentication.FirebaseAuthentication",
+    ],
+    "DEFAULT_PERMISSION_CLASSES" : [
+        "rest_framework.permissions.IsAuthenticated",
+    ],
+    "DEFAULT_RENDERER_CLASSES" : [
+        "rest_framework.renderers.JSONRenderer",
+    ],
+    "EXCEPTION_HANDLER" : "rest_framework.views.exception_handler",
+}
+
+
+# ----- Firebase Admin SDK ------
+FIREBASE_CREDENTIALS_PATH = config("FIREBASE_CREDENTIALS_PATH")
+
+
+# ----- CORS (your Next.js frontend) ------
+CORS_ALLOWED_ORIGINS = config("CORS_ALLOWED_ORIGINS", cast=Csv())
+CORS_ALLOW_CREDENTIALS = True
+
+
+AUTH_PASSWORD_VALIDATORS = [] # unused: Django never handles password here
+AUTHENTICATION_BACKENDS = ["django.contrib.auth.backends.ModelBackend"]
+
+
+# --- For production Security hardening (only biting when DEBUG=False) --- 
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMIANS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_PROXY_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")

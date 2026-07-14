@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "bioguard-ea22b",
+  "private_key_id": "c9cb52471f5aa49c81b4913175297efcf1f2b18d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDZTeaNTkgBsHDg\ntoD/HhrLeM6o6AZqaodqLgKCGDrrzDvf+DKohXHWaFxuPiN3Av0bDryNVS7rwPb9\nFOxsgNkrqpY7/wswJTrcU4Lk1GkHYa4N5VnDTl5CXUZwVJIkXFVzjulimtXKydwG\nJIqi5y3SGAqp5YmCmZ91RdTAJF+fjW1kn5qAIWawr/I0rE2rkPqxWltEGdZJfZSi\ndyHsj2VM8H7sS/oIOMKdXoq83BFqfnbwZClXiggczTpdns1YpcQj6oU9/aD+NhJB\n/QfWqI8gJ0n6znZYvhca6TmFdPTr+z7YcjinsRD8YVbmEKhYC75kNtuwGzrk8DcI\nNlCHKdzJAgMBAAECggEARlQmgmQr/NP4bFnUvPymymSSaesSLH3GztAOQsGJzEfg\ntvdymcT6l1xWUd2th7aBaTDnSEyh724X4cfUTreS0cWXctpz6gSanLUwf1PZnCh6\ndwfb+dBSxGLAydktJTR2+Xvuv9mByOx0184aymdMlpruVJcz3n9OsttDZF5BTncT\n7OY+0sXA6ysPRjj3g2U4NDW+6oUShbHLHwWO3WNjHukNduoIIBX5G8uAYH7yXPku\n1+TCKcftKe4VfMNxx8Qf8lUhehG7lZNN+A99IgjX4X7+HG6pG0ve+25XCuLp4K8+\nT72O6IgeQw8CygNfOzC0W2pP1JObhojKV6ZbRs3okwKBgQD35z1myujxZ7JCXiP5\nAX7wwNeLs3tX0tymk+M0/fnvxhEqUf1Jd73NCijhh5T6ZFson5YgRMWz1w0q1RRr\nMnq6+au9QmIAYQnp871m20uuY43VqzUFuTBXqi3csHOsj2pwMAiQjVx1R36wTeKb\nG7ZvTio7kIOqzTQzuUpW+kU+jwKBgQDgZtFPoWU9XLBKvAfzYT2GJcMfH7JzTUr3\nmBVapn1cu4YBc0x/pTJHzR+uKzCR6RYJqEucn1VL6oORwk5UwvCd7AtOnZolo+P4\nIcRWLMUCKkU54JxuxWdmUMk8oL6gLZPhBZQmy5UwRJHDShUQnUg/yV6qNwBnPeZ/\nwGQGYNfbJwKBgDtq9VCZ+dNCo3s8zSp1rVNPJVqankmihLh4YdDlvu41bw/Rrv/Y\n72khskK8GH0baK4H8hex5CECvmkxwT8gTkJabUtjidHFcHbesNriXPVjby9zZbYF\neQzKAUwQDumhRkW1fZgICc0iYb8oK9Q5hDSRa5XzQVvC62wqUSMfwVEJAoGAe6HK\nEhA+oecOLa6Yxss9RUpKzTv+ai4cbnr40N/HU67xLp1ieTT/lbV6jc+3y7vaa2mw\ndtMGAHRtFoIx+9sHDEq/FAoaokBAWjXoYP37cKzvROrt5M2XoTRDGscJH2DdB222\naQVi5ZvxnuGS53twEcyU/jydWUQuWRYbRbRXWKMCgYAArU6bSaEvwRQMtqriDezM\nJW+vsZfvKtOAdhjrn7N1aXgUWylIG/QbQTZRr0hH8/nYjnckNx0jbBdkORHbquMH\nr3a+AwCfX90AmRrx43DL23p8XziELu/XVtm8sYhIrQNz8RD/plRts0Ru9BPaJ7cl\nXdxaXfHiLT18YwxQnog0Fg==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-fbsvc@bioguard-ea22b.iam.gserviceaccount.com",
+  "client_id": "115771508520981027239",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40bioguard-ea22b.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
