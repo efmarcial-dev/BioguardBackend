@@ -23,5 +23,5 @@ media/
 .vscode/
 .idea/
 
-firebase/credentials
-.json
+# firebase/credentials
+accounts/firebase/bioguard-firebase-cred.json
