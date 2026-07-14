@@ -22,3 +22,6 @@ media/
 # IDEs
 .vscode/
 .idea/
+
+firebase/credentials
+.json
