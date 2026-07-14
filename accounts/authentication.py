@@ -1,5 +1,4 @@
 import firebase_admin
-import os
 from django.conf import settings
 from firebase_admin import auth as firebase_auth
 from firebase_admin import credentials
@@ -8,13 +7,23 @@ from rest_framework import authentication, exceptions
 
 from .models import Profile
 
-# Construct the full path to Firebase credentials from the accounts app root
-firebase_cred_filename = settings.FIREBASE_CREDENTIALS_PATH
-firebase_cred_path = os.path.join(os.path.dirname(__file__), 'firebase', firebase_cred_filename)
-
-# Initialize the Firebase Admin SDk exactly once per process.
+# Initialize the Firebase Admin SDK exactly once per process.
 if not firebase_admin._apps:
-    cred = credentials.Certificate(firebase_cred_path)
+    # Build Firebase credentials from environment variables
+    firebase_config = {
+        "type": settings.FIREBASE_TYPE,
+        "project_id": settings.FIREBASE_PROJECT_ID,
+        "private_key_id": settings.FIREBASE_PRIVATE_KEY_ID,
+        "private_key": settings.FIREBASE_PRIVATE_KEY,
+        "client_email": settings.FIREBASE_CLIENT_EMAIL,
+        "client_id": settings.FIREBASE_CLIENT_ID,
+        "auth_uri": settings.FIREBASE_AUTH_URI,
+        "token_uri": settings.FIREBASE_TOKEN_URI,
+        "auth_provider_x509_cert_url": settings.FIREBASE_AUTH_PROVIDER_X509_CERT_URL,
+        "client_x509_cert_url": settings.FIREBASE_CLIENT_X509_CERT_URL,
+        "universe_domain": settings.FIREBASE_UNIVERSE_DOMAIN,
+    }
+    cred = credentials.Certificate(firebase_config)
     firebase_admin.initialize_app(cred)
     
     
