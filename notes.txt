@@ -1,0 +1,5 @@
+curl -s -D - -o /dev/null -X OPTIONS \
+  -H "Origin: https://nct75sc7-3000.use.devtunnels.ms" \
+  -H "Access-Control-Request-Method: GET" \
+  -H "Access-Control-Request-Headers: authorization" \
+  http://localhost:8000/api/profile/me/
