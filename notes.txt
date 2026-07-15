@@ -3,3 +3,20 @@ curl -s -D - -o /dev/null -X OPTIONS \
   -H "Access-Control-Request-Method: GET" \
   -H "Access-Control-Request-Headers: authorization" \
   http://localhost:8000/api/profile/me/
+
+  efmarcial1060@eduardo-nova:~/Development/BioguardBackend$ curl -s -D - -o /dev/null -X OPTIONS \
+  -H "Origin: https://nct75sc7-3000.use.devtunnels.ms" \
+  -H "Access-Control-Request-Method: GET" \
+  -H "Access-Control-Request-Headers: authorization" \
+  http://localhost:8000/api/profile/me/
+HTTP/1.1 200 OK
+Date: Wed, 15 Jul 2026 19:45:34 GMT
+Server: WSGIServer/0.2 CPython/3.14.4
+content-length: 0
+Content-Type: text/html; charset=utf-8
+Vary: origin
+access-control-allow-origin: https://nct75sc7-3000.use.devtunnels.ms
+access-control-allow-credentials: true
+access-control-allow-headers: accept, authorization, content-type, user-agent, x-csrftoken, x-requested-with
+access-control-allow-methods: DELETE, GET, OPTIONS, PATCH, POST, PUT
+access-control-max-age: 86400
