@@ -23,9 +23,14 @@ if not firebase_admin._apps:
         "client_x509_cert_url": settings.FIREBASE_CLIENT_X509_CERT_URL,
         "universe_domain": settings.FIREBASE_UNIVERSE_DOMAIN,
     }
-    cred = credentials.Certificate(firebase_config)
-    firebase_admin.initialize_app(cred)
-    
+    try:
+        cred = credentials.Certificate(firebase_config)
+        firebase_admin.initialize_app(cred)
+    except Exception as e:
+        print(f"Failed Firebase auth admin: {e}")
+
+else:
+    print("Nothing is happining ")
     
 class FirebaseAuthentication(authentication.BaseAuthentication):
     
