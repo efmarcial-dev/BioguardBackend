@@ -173,7 +173,8 @@ FIREBASE_UNIVERSE_DOMAIN = config("FIREBASE_UNIVERSE_DOMAIN")
 
 # ----- CORS (your Next.js frontend) ------
 CORS_ALLOWED_ORIGINS = [
-    "https://contradictable-joy-vicarious.ngrok-free.dev"
+    "https://contradictable-joy-vicarious.ngrok-free.dev",
+    "http://localhost:3000",
 ]
 CORS_ALLOW_CREDENTIALS = True
 
