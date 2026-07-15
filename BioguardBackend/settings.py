@@ -181,6 +181,11 @@ CORS_ALLOWED_ORIGINS = [
     "https://*.use.devtunnels.ms" # VS-Code port tunnel address
 ]
 
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://.*\.use\.devtunnels\.ms$",
+    r"^https://.*\.ngrok-free\.dev$",
+]
+
 CORS_ALLOW_CREDENTIALS = True
 
 
