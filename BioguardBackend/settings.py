@@ -44,6 +44,7 @@ ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     ".ngrok-free.dev", # This wildcard covers any ngrok domain
+    
 ]
 
 
@@ -174,8 +175,12 @@ FIREBASE_UNIVERSE_DOMAIN = config("FIREBASE_UNIVERSE_DOMAIN")
 # ----- CORS (your Next.js frontend) ------
 CORS_ALLOWED_ORIGINS = [
     "https://contradictable-joy-vicarious.ngrok-free.dev",
+    "https://*.ngrok-free.dev",
     "http://localhost:3000",
+    "http://eduardos-macbook-pro-6.taildaaf33.ts.net", # Tailscale macbook pro address
+    "https://nct75sc7-3000.use.devtunnels.ms/" # VS-Code port tunnel address
 ]
+
 CORS_ALLOW_CREDENTIALS = True
 
 
@@ -183,6 +188,9 @@ CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = [
     "https://contradictable-joy-vicarious.ngrok-free.dev",
     "https://*.ngrok-free.dev",
+    "http://eduardos-macbook-pro-6.taildaaf33.ts.net", # Tailscale macbook pro address
+    "http://localhost:3000",
+    "https://nct75sc7-3000.use.devtunnels.ms/" # VS-Code port tunnel address
 ]
 
 
