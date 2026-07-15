@@ -174,28 +174,26 @@ FIREBASE_UNIVERSE_DOMAIN = config("FIREBASE_UNIVERSE_DOMAIN")
 
 # ----- CORS (your Next.js frontend) ------
 CORS_ALLOWED_ORIGINS = [
-    "https://contradictable-joy-vicarious.ngrok-free.dev",
-    "https://*.ngrok-free.dev",
     "http://localhost:3000",
     "http://eduardos-macbook-pro-6.taildaaf33.ts.net", # Tailscale macbook pro address
-    "https://*.use.devtunnels.ms" # VS-Code port tunnel address
 ]
-
+ 
+# Devtunnel and ngrok subdomains rotate, so match them with regexes instead
+# of hardcoding the current (temporary) subdomain.
 CORS_ALLOWED_ORIGIN_REGEXES = [
     r"^https://.*\.use\.devtunnels\.ms$",
     r"^https://.*\.ngrok-free\.dev$",
 ]
-
+ 
 CORS_ALLOW_CREDENTIALS = True
-
-
+ 
+ 
 # ----- CSRF Trusted Origins ------
 CSRF_TRUSTED_ORIGINS = [
-    "https://contradictable-joy-vicarious.ngrok-free.dev",
     "https://*.ngrok-free.dev",
+    "https://*.use.devtunnels.ms",
     "http://eduardos-macbook-pro-6.taildaaf33.ts.net", # Tailscale macbook pro address
     "http://localhost:3000",
-    "https://*.use.devtunnels.ms" # VS-Code port tunnel address
 ]
 
 
