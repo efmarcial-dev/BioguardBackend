@@ -40,7 +40,11 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default=False, cast=bool)
 
-ALLOWED_HOSTS = config("DJANGO_ALLOWED_HOSTS", default="localhost, 127.0.0.1", cast=Csv())
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    ".ngrok-free.dev", # This wildcard covers any ngrok domain
+]
 
 
 
@@ -162,17 +166,26 @@ FIREBASE_CLIENT_EMAIL = config("FIREBASE_CLIENT_EMAIL")
 FIREBASE_CLIENT_ID = config("FIREBASE_CLIENT_ID")
 FIREBASE_AUTH_URI = config("FIREBASE_AUTH_URI")
 FIREBASE_TOKEN_URI = config("FIREBASE_TOKEN_URI")
-FIREBASE_AUTH_PROVIDER_X509_CERT_URL = config("FIREBASE_AUTH_PROVIDER_X5099_CERT_URL")
+FIREBASE_AUTH_PROVIDER_X509_CERT_URL = config("FIREBASE_AUTH_PROVIDER_X509_CERT_URL")
 FIREBASE_CLIENT_X509_CERT_URL = config("FIREBASE_CLIENT_X509_CERT_URL")
 FIREBASE_UNIVERSE_DOMAIN = config("FIREBASE_UNIVERSE_DOMAIN")
 
 
 # ----- CORS (your Next.js frontend) ------
-CORS_ALLOWED_ORIGINS = config("CORS_ALLOWED_ORIGINS", cast=Csv())
+CORS_ALLOWED_ORIGINS = [
+    "https://contradictable-joy-vicarious.ngrok-free.dev"
+]
 CORS_ALLOW_CREDENTIALS = True
 
 
-AUTH_PASSWORD_VALIDATORS = [] # unused: Django never handles password here
+# ----- CSRF Trusted Origins ------
+CSRF_TRUSTED_ORIGINS = [
+    "https://contradictable-joy-vicarious.ngrok-free.dev",
+    "https://*.ngrok-free.dev",
+]
+
+
+#AUTH_PASSWORD_VALIDATORS = [] # unused: Django never handles password here
 AUTHENTICATION_BACKENDS = ["django.contrib.auth.backends.ModelBackend"]
 
 
