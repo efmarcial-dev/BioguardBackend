@@ -178,7 +178,7 @@ CORS_ALLOWED_ORIGINS = [
     "https://*.ngrok-free.dev",
     "http://localhost:3000",
     "http://eduardos-macbook-pro-6.taildaaf33.ts.net", # Tailscale macbook pro address
-    "https://nct75sc7-3000.use.devtunnels.ms" # VS-Code port tunnel address
+    "https://*.use.devtunnels.ms" # VS-Code port tunnel address
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -190,7 +190,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://*.ngrok-free.dev",
     "http://eduardos-macbook-pro-6.taildaaf33.ts.net", # Tailscale macbook pro address
     "http://localhost:3000",
-    "https://nct75sc7-3000.use.devtunnels.ms/" # VS-Code port tunnel address
+    "https://*.use.devtunnels.ms" # VS-Code port tunnel address
 ]
 
 
