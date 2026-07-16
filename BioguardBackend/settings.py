@@ -44,6 +44,7 @@ ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     ".ngrok-free.dev", # This wildcard covers any ngrok domain
+    ".ts.net" # Wildcard for tailscale nova laptop
     
 ]
 
@@ -176,6 +177,7 @@ FIREBASE_UNIVERSE_DOMAIN = config("FIREBASE_UNIVERSE_DOMAIN")
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://eduardos-macbook-pro-6.taildaaf33.ts.net", # Tailscale macbook pro address
+    "https://eduardo-nova.taildaaf33.ts.net"
 ]
  
 # Devtunnel and ngrok subdomains rotate, so match them with regexes instead
@@ -183,6 +185,7 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOWED_ORIGIN_REGEXES = [
     r"^https://.*\.use\.devtunnels\.ms$",
     r"^https://.*\.ngrok-free\.dev$",
+    r"^https://.*\.ts\.net",
 ]
  
 CORS_ALLOW_CREDENTIALS = True
@@ -194,6 +197,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://*.use.devtunnels.ms",
     "http://eduardos-macbook-pro-6.taildaaf33.ts.net", # Tailscale macbook pro address
     "http://localhost:3000",
+    "https://eduardo-nova.taildaaf33.ts.net"
 ]
 
 
