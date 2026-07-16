@@ -29,12 +29,12 @@ class ClinicMembershipSerializer(serializers.ModelSerializer):
     class Meta:
         model = ClinicMembership
         fields = [
-            "id", "clinic", "clinic_id","clinic_membership", "role", "is_primary", "joined_at"
+            "id", "clinic", "clinic_id", "role", "is_primary", "joined_at"
         ]
         
         
 class ProfileSerializer(serializers.ModelSerializer):
-    clinic_memberships = ClinicMembershipSerializer(many=True, read_only=True)
+    clinic_membership = ClinicMembershipSerializer(many=True, read_only=True)
     
     class Meta:
         model = Profile
