@@ -29,7 +29,7 @@ class ClinicMembershipSerializer(serializers.ModelSerializer):
     class Meta:
         model = ClinicMembership
         fields = [
-            "id", "clinic", "clinic_id", "role", "is_primary", "joined_at"
+            "id", "clinic", "clinic_id","clinic_membership", "role", "is_primary", "joined_at"
         ]
         
         
