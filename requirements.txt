@@ -24,6 +24,7 @@ google-resumable-media==2.10.0
 googleapis-common-protos==1.75.0
 grpcio==1.82.1
 grpcio-status==1.82.1
+gunicorn==26.0.0
 h11==0.16.0
 h2==4.3.0
 hpack==4.2.0
@@ -33,6 +34,7 @@ hyperframe==6.1.0
 idna==3.18
 Markdown==3.10.2
 msgpack==1.2.1
+packaging==26.2
 proto-plus==1.28.1
 protobuf==7.35.1
 psycopg2-binary==2.9.12
