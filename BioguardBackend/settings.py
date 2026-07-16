@@ -24,11 +24,56 @@ import dj_database_url
 from dotenv import load_dotenv
 from decouple import Csv, config 
 
+import firebase_admin
+from firebase_admin import credentials
+
 # This loads the variable from .env
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Initialize the Firebase Admin SDK exactly once per process.
+
+# ----- Firebase Admin SDK ------
+FIREBASE_TYPE = config("FIREBASE_TYPE")
+FIREBASE_PROJECT_ID = config("FIREBASE_PROJECT_ID")
+FIREBASE_PRIVATE_KEY_ID = config("FIREBASE_PRIVATE_KEY_ID")
+FIREBASE_PRIVATE_KEY = config("FIREBASE_PRIVATE_KEY")
+FIREBASE_CLIENT_EMAIL = config("FIREBASE_CLIENT_EMAIL")
+FIREBASE_CLIENT_ID = config("FIREBASE_CLIENT_ID")
+FIREBASE_AUTH_URI = config("FIREBASE_AUTH_URI")
+FIREBASE_TOKEN_URI = config("FIREBASE_TOKEN_URI")
+FIREBASE_AUTH_PROVIDER_X509_CERT_URL = config("FIREBASE_AUTH_PROVIDER_X509_CERT_URL")
+FIREBASE_CLIENT_X509_CERT_URL = config("FIREBASE_CLIENT_X509_CERT_URL")
+FIREBASE_UNIVERSE_DOMAIN = config("FIREBASE_UNIVERSE_DOMAIN")
+
+if not firebase_admin._apps:
+    # Build Firebase credentials from environment variables
+    firebase_config = {
+        "type": FIREBASE_TYPE,
+        "project_id": FIREBASE_PROJECT_ID,
+        "private_key_id": FIREBASE_PRIVATE_KEY_ID,
+        "private_key": FIREBASE_PRIVATE_KEY,
+        "client_email": FIREBASE_CLIENT_EMAIL,
+        "client_id": FIREBASE_CLIENT_ID,
+        "auth_uri": FIREBASE_AUTH_URI,
+        "token_uri": FIREBASE_TOKEN_URI,
+        "auth_provider_x509_cert_url": FIREBASE_AUTH_PROVIDER_X509_CERT_URL,
+        "client_x509_cert_url": FIREBASE_CLIENT_X509_CERT_URL,
+        "universe_domain": FIREBASE_UNIVERSE_DOMAIN,
+    }
+    try:
+        cred = credentials.Certificate(firebase_config)
+        options = {
+            'clockSkew' : 80, # Allow up to 60 seconds of skew
+        }
+        firebase_admin.initialize_app(cred, options)
+    except Exception as e:
+        print(f"Failed Firebase auth admin: {e}")
+
+else:
+    print("Nothing is happining ")
 
 
 # Quick-start development settings - unsuitable for production
@@ -159,18 +204,7 @@ REST_FRAMEWORK = {
 }
 
 
-# ----- Firebase Admin SDK ------
-FIREBASE_TYPE = config("FIREBASE_TYPE")
-FIREBASE_PROJECT_ID = config("FIREBASE_PROJECT_ID")
-FIREBASE_PRIVATE_KEY_ID = config("FIREBASE_PRIVATE_KEY_ID")
-FIREBASE_PRIVATE_KEY = config("FIREBASE_PRIVATE_KEY")
-FIREBASE_CLIENT_EMAIL = config("FIREBASE_CLIENT_EMAIL")
-FIREBASE_CLIENT_ID = config("FIREBASE_CLIENT_ID")
-FIREBASE_AUTH_URI = config("FIREBASE_AUTH_URI")
-FIREBASE_TOKEN_URI = config("FIREBASE_TOKEN_URI")
-FIREBASE_AUTH_PROVIDER_X509_CERT_URL = config("FIREBASE_AUTH_PROVIDER_X509_CERT_URL")
-FIREBASE_CLIENT_X509_CERT_URL = config("FIREBASE_CLIENT_X509_CERT_URL")
-FIREBASE_UNIVERSE_DOMAIN = config("FIREBASE_UNIVERSE_DOMAIN")
+
 
 
 # ----- CORS (your Next.js frontend) ------

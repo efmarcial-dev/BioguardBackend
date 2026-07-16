@@ -1,38 +1,12 @@
-import firebase_admin
-from django.conf import settings
-from firebase_admin import auth as firebase_auth
-from firebase_admin import credentials
-from rest_framework import authentication, exceptions
-
+from rest_framework.authentication import BaseAuthentication
+from rest_framework.exceptions import AuthenticationFailed
+from firebase_admin import auth
+from django.contrib.auth.models import User
 
 from .models import Profile
 
-# Initialize the Firebase Admin SDK exactly once per process.
-if not firebase_admin._apps:
-    # Build Firebase credentials from environment variables
-    firebase_config = {
-        "type": settings.FIREBASE_TYPE,
-        "project_id": settings.FIREBASE_PROJECT_ID,
-        "private_key_id": settings.FIREBASE_PRIVATE_KEY_ID,
-        "private_key": settings.FIREBASE_PRIVATE_KEY,
-        "client_email": settings.FIREBASE_CLIENT_EMAIL,
-        "client_id": settings.FIREBASE_CLIENT_ID,
-        "auth_uri": settings.FIREBASE_AUTH_URI,
-        "token_uri": settings.FIREBASE_TOKEN_URI,
-        "auth_provider_x509_cert_url": settings.FIREBASE_AUTH_PROVIDER_X509_CERT_URL,
-        "client_x509_cert_url": settings.FIREBASE_CLIENT_X509_CERT_URL,
-        "universe_domain": settings.FIREBASE_UNIVERSE_DOMAIN,
-    }
-    try:
-        cred = credentials.Certificate(firebase_config)
-        firebase_admin.initialize_app(cred)
-    except Exception as e:
-        print(f"Failed Firebase auth admin: {e}")
 
-else:
-    print("Nothing is happining ")
-    
-class FirebaseAuthentication(authentication.BaseAuthentication):
+class FirebaseAuthentication(BaseAuthentication):
     
     """
     Expects: Authorization: Bearer <Firebase ID token>
@@ -46,28 +20,41 @@ class FirebaseAuthentication(authentication.BaseAuthentication):
     keyword = "Bearer"
     
     def authenticate(self, request):
-        auth_header = authentication.get_authorization_header(request).decode("utf-8")
+        auth_header = request.META.get('HTTP_AUTHORIZATION')
         if not auth_header:
-            return None    
+            return None    # No credentials provided; pass to other authentication schemes
     
-        parts = auth_header.split()
-        if len(parts) != 2 or parts[0] != self.keyword:
-            return None
+    
+        # Parse the 'Bearer <token>' pattern
+        try:
+            auth_type, id_token = auth_header.split(' ')
+            if auth_type.lower() != 'bearer':
+                raise AuthenticationFailed("Authorization header must start with Bearer")
+        except ValueError:
+            raise AuthenticationFailed("Invalid authorization header format")
         
-        id_token = parts[1]
         
         try:
-            decoded_token = firebase_auth.verify_id_token(id_token, check_revoked=True)
-        except firebase_auth.ExpiredIdTokenError:
-            raise exceptions.AuthenticationFailed("Firebase token has expired")
-        except firebase_auth.RevokedIdTokenError:
-            raise exceptions.AuthenticationFailed("Firebase token has been revoked")
-        except Exception:
-            raise exceptions.AuthenticationFailed("Invalid Firebase token.")
+            # Verify the token against Firebase servers using the ADMIN SDK
+            decoded_token = auth.verify_id_token(id_token)
+        except Exception as e:
+            print(f"DEBUG: Firebase Token Verification Faild: {e}")
+            raise AuthenticationFailed(f'Invalid Firebase Token: {str(e)}')
         
         firebase_uid = decoded_token.get('uid')
         email = decoded_token.get("email", "")
         
+        print(f"AUTH TYPE: {auth_type}")
+        print(f"Firebase ID Token: {id_token}")
+        print(f'Firebase UID: {firebase_uid}')
+        print(f"Firebase Email: {email}")
+        
+        
+        # Map to and existing Django user or create a new local shell user
+        user, created = User.objects.get_or_create(
+            username=firebase_uid, # Use unique Firebase UID as the unique Django username
+            defaults={'email': email}
+        )
         
         profile, _ = Profile.objects.get_or_create(
             firebase_uid=firebase_uid,
@@ -75,7 +62,7 @@ class FirebaseAuthentication(authentication.BaseAuthentication):
         )
         
         if not profile.is_active:
-            raise exceptions.AuthenticationFailed("This account has been disbaled")
+            raise AuthenticationFailed("This account has been disbaled")
         
         # Keep email in sync in case it changed on the Firebase side.
         if email and profile.email != email:
