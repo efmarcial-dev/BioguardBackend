@@ -31,7 +31,7 @@ class MeView(generics.RetrieveUpdateAPIView):
     serializer_class = ProfileSerializer
     permission_classes = [IsAuthenticated]
     
-    def get_object(self, request):
+    def get_object(self):
         # FirebaseAuthentication already put the matching Profile on request.user
         return self.request.user
     
