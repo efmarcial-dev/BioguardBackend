@@ -91,6 +91,8 @@ ALLOWED_HOSTS = [
     ".ngrok-free.dev", # This wildcard covers any ngrok domain
     ".ts.net" # Wildcard for tailscale nova laptop
     ".vercel.app", # Wildcard for vercel domain
+    "bioguard-backend-hl5ekhlrw-novasolutionsassets-1299s-projects.vercel.app",
+    "bioguard-backend.vercel.app",
     
 ]
 
