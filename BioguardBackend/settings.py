@@ -186,6 +186,19 @@ USE_I18N = True
 
 USE_TZ = True
 
+# SUPABASE credentials 
+SUPABASE_URL = os.environ.get("SUPABASE_URL")
+SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
+
+# STORAGE Configuration
+STOREAGE = {
+    'default' : {
+        'BACKEND' : 'django_supabase_storage.SupabaseMediaStorage',
+    },
+    'stacticfiles' : {
+        'BACKEND' : 'django_supabase_storage.SupabaseStaticStorage',
+    }
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
