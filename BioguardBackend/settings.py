@@ -90,6 +90,7 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     ".ngrok-free.dev", # This wildcard covers any ngrok domain
     ".ts.net" # Wildcard for tailscale nova laptop
+    ".vercel.app", # Wildcard for vercel domain
     
 ]
 
